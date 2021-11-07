@@ -17,8 +17,7 @@ app.get('/', (req, res) => {
 
 /* ------------------------------------------------------ */
 /* Server Listen */
-const PORT = 8080
-const server = app.listen(PORT, () => {
+const server = app.listen(process.env.PORT || 5000, () => {
     console.log(`Servidor escuchando en el puerto ${server.address().port}`)
 })
 server.on('error', error => console.log(`Error en servidor error`))
