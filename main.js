@@ -9,7 +9,7 @@ app.use(express.json())
 
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html')
+    res.send("Hola")
 })
 
 
