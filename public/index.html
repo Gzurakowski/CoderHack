@@ -5,11 +5,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CoderHack</title>
+    <title>Prueba mongoose</title>
 </head>
 
 <body>
-    <h1>Bienvenido a la coderHack</h1>
+    <form action="/user" method="post">
+        <label for="mail">Mail</label>
+        <input type="email" id="mail" name="mail">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password">
+        <label for="select">Eres emprendedor?</label>
+        <input type="radio" name="emprendedor" id="select">
+        <button>Enviar</button>
+    </form>
 </body>
 
 </html>
