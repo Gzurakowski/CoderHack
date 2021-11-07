@@ -23,7 +23,7 @@ await ConectDB()
 
 async function create(usuario = { mail: "gonchizurak@gmail.com", password: '1234' }) {
     try{
-        console.log(proces.env.MONGODB_URI)
+        console.log(process.env.MONGODB_URI)
         console.log("Create")
         const usuarioSaveModel = new model.usuarios(usuario)
         let usuarioSave = await usuarioSaveModel.save()
