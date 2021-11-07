@@ -21,11 +21,14 @@ async function ConectDB() {
 ConectDB()
 
 async function create(usuario = { mail: "gonchizurak@gmail.com", password: '1234' }) {
-    console.log("Create")
+    try{
+        console.log("Create")
     const usuarioSaveModel = new model.usuarios(usuario)
     let usuarioSave = await usuarioSaveModel.save()
     console.log(usuarioSave)
-
+    }catch (err){
+        console.log(err)
+    }
 }
 
 const app = express()
