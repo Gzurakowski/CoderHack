@@ -7,9 +7,9 @@ import { MongoClient } from 'mongodb'
 
 async function ConectDB() {
     try {
-        
+        console.log(process.env.MONGODB_URI)
         const URL = 'mongodb+srv://equipo1:hRNd6GupvRxH4vdX@coderhack.yox2b.mongodb.net/Equipo1?retryWrites=true&w=majority'
-        let rta = await mongoose.connect(process.env.MONGODB_URI, {
+        let rta = await mongoose.connect(URL, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         })
