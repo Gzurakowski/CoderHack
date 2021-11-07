@@ -7,6 +7,7 @@ import { MongoClient } from 'mongodb'
 
 async function ConectDB() {
     try {
+        
         const URL = 'mongodb+srv://equipo1:hRNd6GupvRxH4vdX@coderhack.yox2b.mongodb.net/Equipo1?retryWrites=true&w=majority'
         let rta = await mongoose.connect(proces.env.MONGODB_URI, {
             useNewUrlParser: true,
@@ -22,10 +23,11 @@ await ConectDB()
 
 async function create(usuario = { mail: "gonchizurak@gmail.com", password: '1234' }) {
     try{
+        console.log(proces.env.MONGODB_URI)
         console.log("Create")
-    const usuarioSaveModel = new model.usuarios(usuario)
-    let usuarioSave = await usuarioSaveModel.save()
-    console.log(usuarioSave)
+        const usuarioSaveModel = new model.usuarios(usuario)
+        let usuarioSave = await usuarioSaveModel.save()
+        console.log(usuarioSave)
     }catch (err){
         console.log(err)
     }
