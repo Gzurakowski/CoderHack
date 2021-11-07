@@ -18,7 +18,7 @@ async function ConectDB() {
     }
 }
 
-ConectDB()
+await ConectDB()
 
 async function create(usuario = { mail: "gonchizurak@gmail.com", password: '1234' }) {
     try{
