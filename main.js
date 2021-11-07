@@ -8,8 +8,9 @@ app.use(express.static('public'))
 app.use(express.json())
 
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html')
+app.get('/bienvenida/:name', (req, res) => {
+    const { name } = req.params;
+    res.send(`Hola ${name}`)
 })
 
 
