@@ -73,7 +73,7 @@ app.get('/users', async (req, res) =>{
 /* ------------------------------------------------------ */
 /* Server Listen */
 
-const server = app.listen(process.env.port || 8080, () => {
+const server = app.listen(process.env.PORT || 5000, () => {
     console.log(`Servidor escuchando en el puerto ${server.address().port}`)
 })
 server.on('error', error => console.log(`Error en servidor ${error}`))
