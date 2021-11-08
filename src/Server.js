@@ -1,8 +1,37 @@
 import express from 'express'
 import mongoose from 'mongoose'
+import bcrypt, { hash } from 'bcrypt'
 import * as model from '../models/user.js'
 //const multer = require('multer')
-import { MongoClient } from 'mongodb'
+
+async function hashPassword(password){
+    try{
+        let hashPwd = bcrypt.hash(password,10);
+        return hashPwd
+    }catch(err){
+        console.log(err)
+    }
+    
+}
+
+  
+
+// async function sendEncrypted(usuario){
+    
+//     const user =  await new Promise((resolve,reject)=>{
+        
+//         resolve(await new Promise((resolve, reject) => {
+            
+//         })) 
+//     }) bcrypt.genSalt(saltRounds,async (err,salt) =>{
+//         bcrypt.hash(usuario.password, salt, async (err, hash) =>{
+//             usuario.password = hash
+//             const usuarioSaveModel = new model.usuarios(usuario)
+//             return await usuarioSaveModel.save()
+//         })
+//     })
+    
+// }
 
 
 async function ConectDB() {
@@ -17,18 +46,11 @@ async function ConectDB() {
     }
 }
 
+
+
+
 await ConectDB()
 
-async function create(usuario = { mail: "gonchizurak@gmail.com", password: '1234' }) {
-    try{
-        console.log("Create")
-        const usuarioSaveModel = new model.usuarios(usuario)
-        let usuarioSave = await usuarioSaveModel.save()
-        console.log(usuarioSave)
-    }catch (err){
-        console.log(err)
-    }
-}
 
 const app = express()
 
@@ -58,14 +80,39 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html')
 })
 
-app.post('/user', async(req, res) => {
-    await create(req.body)
-    res.redirect('/')
+app.post('/signUp', async(req, res) => {
+    try{
+        const user = req.body
+        const search = await model.usuarios.find({mail:user.mail})
+        if(search.length == 0){
+            user.password = await hashPassword(user.password)
+            const usuarioSaveModel = new model.usuarios(user)
+            const usuarioSave = await usuarioSaveModel.save()
+            console.log(usuarioSave.id)
+            res.redirect(`/user/${usuarioSave.id}`)
+        }else{
+            res.redirect('/?error=True')
+        }
+        
+    }catch(err) {
+        console.log(err)
+    }
+    
+    
+    
+    
 })
 
 app.get('/users', async (req, res) =>{
     let users = await model.usuarios.find({})
-    res.send(users)
+    res.send( users)
+})
+
+app.get('/user/:id', async (req, res) =>{
+    const id = req.params.id
+    console.log(id)
+    let user = await model.usuarios.findById(id)
+    res.send(user)
 })
 
 
