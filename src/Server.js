@@ -105,7 +105,7 @@ app.post('/signUp', async(req, res) => {
 
 app.get('/users', async (req, res) =>{
     let users = await model.usuarios.find({})
-    res.send( users)
+    res.json( users)
 })
 
 app.get('/user/:id', async (req, res) =>{
