@@ -1,15 +1,20 @@
 {
-    "name": "test",
+    "name": "testMongo",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
+    "type": "module",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node main.js"
+        "start": "node ./src/Server.js",
+        "local": "heroku local web"
     },
+    "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "express": "^4.17.1"
+        "bcrypt": "^5.0.1",
+        "express": "^4.17.1",
+        "mongoose": "^6.0.12"
     }
 }
