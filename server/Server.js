@@ -1,7 +1,9 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import bcrypt, { hash } from 'bcrypt'
-import * as model from '../models/user.js'
+import engine from "react-engine"
+import path from 'path'
+// import * as model from '../../models/user.js'
 //const multer = require('multer')
 
 async function hashPassword(password){
@@ -49,12 +51,17 @@ async function ConectDB() {
 
 
 
-await ConectDB()
+// await ConectDB()
 
 
 const app = express()
 
 
+app.engine('.jsx', engine.server.create())
+app.set('views', './views')
+app.set('view engine', 'jsx')
+app.use(express.static('build'));
+app.set('view', engine.expressView)
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 app.use(express.json())
@@ -77,7 +84,7 @@ app.use(express.json())
 
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html')
+    res.render('index')
 })
 
 app.post('/signUp', async(req, res) => {
