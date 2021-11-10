@@ -1,8 +1,10 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
+import env from 'dotenv'
 import {usuarios} from '../models/user.js'
 import {desafios} from '../models/desafio.js'
+env.config()
 //const multer = require('multer')
 
 async function hashPassword(password){
