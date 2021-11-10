@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "local": "heroku local web",
     "start-client": "react-scripts start",
-    "start": "npm run-script build && node ./server/server.js",
+    "start": "npm run-script build && node ./server/Server.js",
     "build": "react-scripts build"
   },
   "keywords": [],
