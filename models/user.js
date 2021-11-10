@@ -8,6 +8,9 @@ const usuariosSchema = new Mongoose.Schema({
         required: true,
         max: 60
     },
+    username:{
+        type:String
+    },
     password: {
         type: String,
         required: true,

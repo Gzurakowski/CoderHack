@@ -3,20 +3,8 @@ import mongoose from 'mongoose'
 import bcrypt, { hash } from 'bcrypt'
 import {usuarios} from '../models/user.js'
 import {desafios} from '../models/desafio.js'
-import faker from 'faker'
-
-
-faker.fake
 //const multer = require('multer')
 
-
-const testUser = {
-    mail:"test@test.com",
-    password:"sadadsa",
-    name:"Pablo perrea",
-    rol:'emprendedor',
-    newsletter:false
-}
 async function hashPassword(password){
     try{
         let hashPwd = await bcrypt.hash(password,10);
@@ -26,26 +14,6 @@ async function hashPassword(password){
     }
     
 }
-
-  
-
-// async function sendEncrypted(usuario){
-    
-//     const user =  await new Promise((resolve,reject)=>{
-        
-//         resolve(await new Promise((resolve, reject) => {
-            
-//         })) 
-//     }) bcrypt.genSalt(saltRounds,async (err,salt) =>{
-//         bcrypt.hash(usuario.password, salt, async (err, hash) =>{
-//             usuario.password = hash
-//             const usuarioSaveModel = new model.usuarios(usuario)
-//             return await usuarioSaveModel.save()
-//         })
-//     })
-    
-// }
-
 
 async function ConectDB() {
     try {
@@ -59,22 +27,9 @@ async function ConectDB() {
     }
 }
 
-
-
-
 await ConectDB()
-
-const test = async (user) =>{
-    user.password = await hashPassword(user.password)
-    const usuarioSaveModel = new usuarios(user)
-    const usuarioSave = await usuarioSaveModel.save()
-    console.log(usuarioSave.toJSON())
-}
-
-
 const app = express()
 
-// test(testUser)
 
 
 app.use(express.urlencoded({ extended: true }))
@@ -153,13 +108,10 @@ app.post('/crearDesafio/:id', async (req, res) =>{
         const {id} = req.params
         const desafioForm = req.body
         desafioForm.user = id
-        console.log(desafioForm)
         const desafioSaveModel = new desafios(desafioForm)
         const desafioSave = await desafioSaveModel.save()
         const _id = desafioSave._id
-        console.log(_id)
         const user = await usuarios.updateOne({_id:id}, {$push: {"emprendimiento.desafios": _id}})
-        console.log(user)
         res.sendStatus(200)
     }catch(err){
         console.log(err)
