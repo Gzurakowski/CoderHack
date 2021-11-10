@@ -5,7 +5,6 @@ const usuariosCollection = 'usuarios'
 const usuariosSchema = new Mongoose.Schema({
     mail: {
         type: String,
-        required: true,
         max: 60
     },
     user:{
@@ -13,17 +12,14 @@ const usuariosSchema = new Mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
         max: 30
     },
     name:{
         type:String,
-        required:true,
         max:60
     },
     rol:{
         type:String,
-        required:true,
         max: 15
     },
     country:{

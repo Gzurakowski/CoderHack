@@ -22,7 +22,7 @@ const Navbar = () => {
                     <label className="col-lg-12">Pais de Residencia:</label>
                     <input type="text" name="country" onChange={onChangeEvent}></input>
                     <label className="col-lg-12">Correo Electronico:</label>
-                    <input type="email" name="email" onChange={onChangeEvent} required></input>
+                    <input type="email" name="mail" onChange={onChangeEvent} required></input>
                     <label className="col-lg-12">Nombre de Usuario:</label>
                     <input type="text" name="user" onChange={onChangeEvent}></input>
                     <label className="col-lg-12">Contraseña:</label>

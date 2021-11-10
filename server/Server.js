@@ -18,7 +18,7 @@ async function hashPassword(password){
 
 async function ConectDB() {
     try {
-        let rta = await mongoose.connect(process.env.MONGODB_URI, {
+        await mongoose.connect(process.env.MONGODB_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         })
@@ -76,8 +76,9 @@ app.get('/user/:id', async (req, res) =>{
 app.post('/signUp', async(req, res) => { //Creacion de user
     try{
         const user = req.body
+        console.log(user)
         const search = await usuarios.find({mail:user.mail})
-        if(search.length == 0){
+        if(search.length === 0){
             user.password = await hashPassword(user.password)
             const usuarioSaveModel = new usuarios(user)
             const usuarioSave = await usuarioSaveModel.save()
@@ -114,7 +115,7 @@ app.post('/crearDesafio/:id', async (req, res) =>{
         const desafioSaveModel = new desafios(desafioForm)
         const desafioSave = await desafioSaveModel.save()
         const _id = desafioSave._id
-        const user = await usuarios.updateOne({_id:id}, {$push: {"emprendimiento.desafios": _id}})
+        await usuarios.updateOne({_id:id}, {$push: {"emprendimiento.desafios": _id}})
         res.sendStatus(200)
     }catch(err){
         console.log(err)
