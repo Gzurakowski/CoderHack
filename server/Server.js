@@ -1,9 +1,8 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import bcrypt, { hash } from 'bcrypt'
-import engine from "react-engine"
-import path from 'path'
-// import * as model from '../../models/user.js'
+import bcrypt from 'bcrypt'
+import {usuarios} from '../models/user.js'
+import {desafios} from '../models/desafio.js'
 //const multer = require('multer')
 
 async function hashPassword(password){
@@ -15,25 +14,6 @@ async function hashPassword(password){
     }
     
 }
-
-  
-
-// async function sendEncrypted(usuario){
-    
-//     const user =  await new Promise((resolve,reject)=>{
-        
-//         resolve(await new Promise((resolve, reject) => {
-            
-//         })) 
-//     }) bcrypt.genSalt(saltRounds,async (err,salt) =>{
-//         bcrypt.hash(usuario.password, salt, async (err, hash) =>{
-//             usuario.password = hash
-//             const usuarioSaveModel = new model.usuarios(usuario)
-//             return await usuarioSaveModel.save()
-//         })
-//     })
-    
-// }
 
 
 async function ConectDB() {
@@ -51,17 +31,11 @@ async function ConectDB() {
 
 
 
-// await ConectDB()
-
-
+await ConectDB()
 const app = express()
 
 
-app.engine('.jsx', engine.server.create())
-app.set('views', './views')
-app.set('view engine', 'jsx')
 app.use(express.static('build'));
-app.set('view', engine.expressView)
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 app.use(express.json())
@@ -87,13 +61,25 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
-app.post('/signUp', async(req, res) => {
+app.get('/users', async (req, res) =>{
+    let users = await usuarios.find({})
+    res.json(users)
+})
+
+app.get('/user/:id', async (req, res) =>{
+    const id = req.params.id
+    let user = await usuarios.findById(id)
+    res.json(user)
+})
+
+
+app.post('/signUp', async(req, res) => { //Creacion de user
     try{
         const user = req.body
-        const search = await model.usuarios.find({mail:user.mail})
+        const search = await usuarios.find({mail:user.mail})
         if(search.length == 0){
             user.password = await hashPassword(user.password)
-            const usuarioSaveModel = new model.usuarios(user)
+            const usuarioSaveModel = new usuarios(user)
             const usuarioSave = await usuarioSaveModel.save()
             console.log(usuarioSave.id)
             res.redirect(`/user/${usuarioSave.id}`)
@@ -104,23 +90,37 @@ app.post('/signUp', async(req, res) => {
     }catch(err) {
         console.log(err)
     }
-    
-    
-    
-    
 })
 
-app.get('/users', async (req, res) =>{
-    let users = await model.usuarios.find({})
-    res.send( users)
+app.post('/crearEmprendimiento/:id', async (req, res) =>{
+    try{
+        const {id} = req.params
+        const {name, descripcion, ejes} = req.body
+        
+        const user = await usuarios.updateOne({_id:id}, {"emprendimiento.name": name,"emprendimiento.descripcion": descripcion,"emprendimiento.ejes": ejes})
+        console.log(user)
+        res.sendStatus(200)
+    }catch(err){
+        console.log(err)
+    }
 })
 
-app.get('/user/:id', async (req, res) =>{
-    const id = req.params.id
-    console.log(id)
-    let user = await model.usuarios.findById(id)
-    res.send(user)
+
+app.post('/crearDesafio/:id', async (req, res) =>{
+    try{
+        const {id} = req.params
+        const desafioForm = req.body
+        desafioForm.user = id
+        const desafioSaveModel = new desafios(desafioForm)
+        const desafioSave = await desafioSaveModel.save()
+        const _id = desafioSave._id
+        const user = await usuarios.updateOne({_id:id}, {$push: {"emprendimiento.desafios": _id}})
+        res.sendStatus(200)
+    }catch(err){
+        console.log(err)
+    }
 })
+
 
 
 
