@@ -1,12 +1,25 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import bcrypt, { hash } from 'bcrypt'
-import * as model from '../models/user.js'
+import {usuarios} from '../models/user.js'
+import {desafios} from '../models/desafio.js'
+import faker from 'faker'
+
+
+faker.fake
 //const multer = require('multer')
 
+
+const testUser = {
+    mail:"test@test.com",
+    password:"sadadsa",
+    name:"Pablo perrea",
+    rol:'emprendedor',
+    newsletter:false
+}
 async function hashPassword(password){
     try{
-        let hashPwd = bcrypt.hash(password,10);
+        let hashPwd = await bcrypt.hash(password,10);
         return hashPwd
     }catch(err){
         console.log(err)
@@ -51,8 +64,17 @@ async function ConectDB() {
 
 await ConectDB()
 
+const test = async (user) =>{
+    user.password = await hashPassword(user.password)
+    const usuarioSaveModel = new usuarios(user)
+    const usuarioSave = await usuarioSaveModel.save()
+    console.log(usuarioSave.toJSON())
+}
+
 
 const app = express()
+
+// test(testUser)
 
 
 app.use(express.urlencoded({ extended: true }))
@@ -80,13 +102,26 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html')
 })
 
-app.post('/signUp', async(req, res) => {
+app.get('/users', async (req, res) =>{
+    let users = await usuarios.find({})
+    res.json( users)
+})
+
+app.get('/user/:id', async (req, res) =>{
+    const id = req.params.id
+    console.log(id)
+    let user = await usuarios.findById(id)
+    res.json(user)
+})
+
+
+app.post('/signUp', async(req, res) => { //Creacion de user
     try{
         const user = req.body
-        const search = await model.usuarios.find({mail:user.mail})
+        const search = await usuarios.find({mail:user.mail})
         if(search.length == 0){
             user.password = await hashPassword(user.password)
-            const usuarioSaveModel = new model.usuarios(user)
+            const usuarioSaveModel = new usuarios(user)
             const usuarioSave = await usuarioSaveModel.save()
             console.log(usuarioSave.id)
             res.redirect(`/user/${usuarioSave.id}`)
@@ -97,23 +132,40 @@ app.post('/signUp', async(req, res) => {
     }catch(err) {
         console.log(err)
     }
-    
-    
-    
-    
 })
 
-app.get('/users', async (req, res) =>{
-    let users = await model.usuarios.find({})
-    res.json( users)
+app.post('/crearEmprendimiento/:id', async (req, res) =>{
+    try{
+        const {id} = req.params
+        const {name, descripcion, ejes} = req.body
+        
+        const user = await usuarios.updateOne({_id:id}, {"emprendimiento.name": name,"emprendimiento.descripcion": descripcion,"emprendimiento.ejes": ejes})
+        console.log(user)
+        res.sendStatus(200)
+    }catch(err){
+        console.log(err)
+    }
 })
 
-app.get('/user/:id', async (req, res) =>{
-    const id = req.params.id
-    console.log(id)
-    let user = await model.usuarios.findById(id)
-    res.send(user)
+
+app.post('/crearDesafio/:id', async (req, res) =>{
+    try{
+        const {id} = req.params
+        const desafioForm = req.body
+        desafioForm.user = id
+        console.log(desafioForm)
+        const desafioSaveModel = new desafios(desafioForm)
+        const desafioSave = await desafioSaveModel.save()
+        const _id = desafioSave._id
+        console.log(_id)
+        const user = await usuarios.updateOne({_id:id}, {$push: {"emprendimiento.desafios": _id}})
+        console.log(user)
+        res.sendStatus(200)
+    }catch(err){
+        console.log(err)
+    }
 })
+
 
 
 
