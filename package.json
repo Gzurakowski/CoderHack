@@ -9,7 +9,8 @@
     "local": "heroku local web",
     "start-client": "react-scripts start",
     "start": "npm run-script build && node ./server/Server.js",
-    "build": "react-scripts build"
+    "build": "react-scripts build",
+    "serve": "nodemon ./server/Server.js"
   },
   "keywords": [],
   "author": "",

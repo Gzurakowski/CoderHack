@@ -55,19 +55,11 @@ const usuariosSchema = new Mongoose.Schema({
 
 usuariosSchema.set('toJSON', {
     transform:(document, returnedObject) =>{
-        if(document.rol === 'emprendimiento'){
-            returnedObject.id = returnedObject._id
-            delete returnedObject._id
-            delete returnedObject.__v
-            
-            delete returnedObject.password
-        }else{
-            returnedObject.id = returnedObject._id
-            delete returnedObject._id
-            delete returnedObject.__v
-            delete returnedObject.emprendimiento
-            delete returnedObject.password
-        }
+        
+        returnedObject.id = returnedObject._id
+        delete returnedObject._id
+        delete returnedObject.__v
+        delete returnedObject.password
         
     }
 })

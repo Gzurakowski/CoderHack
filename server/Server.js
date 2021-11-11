@@ -74,7 +74,33 @@ app.get('/user/:id', async (req, res) =>{
     res.json(user)
 })
 
-
+app.post('/logIn', async (req, res) =>{
+    const {mail, password} = req.body
+    try{
+        const user = await usuarios.findOne({mail:mail})
+        if(user){
+            await bcrypt.compare(password, user.password,async (err, compare) =>{
+                if(err){
+                    console.log(err)
+                    res.send(500)
+                }
+                if(compare){
+                    if (user.rol === 'emprendedor'){
+                        await user.emprendimiento.populate('desafios')
+                    }
+                    res.json(user)
+                }else{
+                    res.json({message:'password incorrecto'})
+                }
+            })  
+        }else{
+            res.json({message:'mail incorrecto'})
+        }
+        
+    }catch(error){
+        console.log(error)
+    }
+})
 app.post('/signUp', async(req, res) => { //Creacion de user
     try{
         const user = req.body
@@ -117,13 +143,28 @@ app.post('/crearDesafio/:id', async (req, res) =>{
         const desafioSaveModel = new desafios(desafioForm)
         const desafioSave = await desafioSaveModel.save()
         const _id = desafioSave._id
-        await usuarios.updateOne({_id:id}, {$push: {"emprendimiento.desafios": _id}})
+        await usuarios.findOneAndUpdate({_id:id}, {$push: {"emprendimiento.desafios": _id}})
         res.sendStatus(200)
     }catch(err){
         console.log(err)
     }
 })
 
+app.post('/crearIdea/:desafio', async (req, res) =>{
+    try{
+        const user = req.headers._id
+        const {desafio} = req.params
+        const {idea} = req.body
+        
+        await desafios.findOneAndUpdate({_id:desafio}, {$push:{ideas:{user:user, idea:idea, reports:0}}})
+        res.sendStatus(200)
+        
+              
+    }catch(err){
+        console.log(err)
+    }
+    
+})
 
 
 
