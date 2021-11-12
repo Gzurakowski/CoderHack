@@ -8,24 +8,24 @@ const IniciarSesion = () => {
     async function onSubmitEvent(e){
         
         e.preventDefault()
-        const user = {
-            mail:e.target[0].value,
-            password:e.target[1].value
-        }
-        const request = {
-            method:'POST',
-            headers: {
-                'Content-Type': 'application/json'
-              },
-            body:JSON.stringify(user),
-        }
-        const userData = await fetch('logIn', request)
-        .then(async res =>  JSON.stringify(await res.json()))
-        .then(user => JSON.parse(user))
-        .then(e => {
-            const user = localStorage.getItem('user')
-            console.log({user})
-        })
+        // const user = {
+        //     mail:e.target[0].value,
+        //     password:e.target[1].value
+        // }
+        // const request = {
+        //     method:'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //       },
+        //     body:JSON.stringify(user),
+        // }
+        // const userData = await fetch('logIn', request)
+        // .then(async res =>  JSON.stringify(await res.json()))
+        // .then(user => JSON.parse(user))
+        // .then(e => {
+        //     const user = localStorage.getItem('user')
+        //     console.log({user})
+        // })
         
     }
     const form = (
