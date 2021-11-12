@@ -4,6 +4,9 @@ import bcrypt from 'bcrypt'
 import env from 'dotenv'
 import {usuarios} from '../models/user.js'
 import {desafios} from '../models/desafio.js'
+import path from 'path'
+
+console.log()
 env.config()
 //const multer = require('multer')
 
@@ -59,9 +62,9 @@ app.use(express.json())
 // /* ------------------------------------------------------ */
 
 
-app.get('/', (req, res) => {
-    res.render('index')
-})
+app.get('*', function(req, res) {
+    res.sendFile('index.html', {root: path.join('./build')});
+});
 
 app.get('/users', async (req, res) =>{
     let users = await usuarios.find({})
@@ -76,6 +79,7 @@ app.get('/user/:id', async (req, res) =>{
 
 app.post('/logIn', async (req, res) =>{
     const {mail, password} = req.body
+    console.log(req.body)
     try{
         const user = await usuarios.findOne({mail:mail})
         if(user){
@@ -88,7 +92,9 @@ app.post('/logIn', async (req, res) =>{
                     if (user.rol === 'emprendedor'){
                         await user.emprendimiento.populate('desafios')
                     }
-                    res.json(user)
+                    
+                    console.log(user)
+                    res.status(200).json(user)
                 }else{
                     res.json({message:'password incorrecto'})
                 }
@@ -165,6 +171,8 @@ app.post('/crearIdea/:desafio', async (req, res) =>{
     }
     
 })
+
+
 
 
 

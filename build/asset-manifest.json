@@ -1,20 +1,34 @@
 {
   "files": {
-    "main.css": "/static/css/main.2ae47eeb.chunk.css",
-    "main.js": "/static/js/main.ea0bd1b8.chunk.js",
-    "main.js.map": "/static/js/main.ea0bd1b8.chunk.js.map",
+    "main.css": "/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/static/js/main.96c9a95f.chunk.js",
+    "main.js.map": "/static/js/main.96c9a95f.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.0da65fb2.js",
     "runtime-main.js.map": "/static/js/runtime-main.0da65fb2.js.map",
-    "static/js/2.89a49915.chunk.js": "/static/js/2.89a49915.chunk.js",
-    "static/js/2.89a49915.chunk.js.map": "/static/js/2.89a49915.chunk.js.map",
+    "static/js/2.929dfcfb.chunk.js": "/static/js/2.929dfcfb.chunk.js",
+    "static/js/2.929dfcfb.chunk.js.map": "/static/js/2.929dfcfb.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.2ae47eeb.chunk.css.map": "/static/css/main.2ae47eeb.chunk.css.map",
-    "static/js/2.89a49915.chunk.js.LICENSE.txt": "/static/js/2.89a49915.chunk.js.LICENSE.txt"
+    "static/css/main.6dea0f05.chunk.css.map": "/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.929dfcfb.chunk.js.LICENSE.txt": "/static/js/2.929dfcfb.chunk.js.LICENSE.txt",
+    "static/media/Emprendedor.6a2cd467.svg": "/static/media/Emprendedor.6a2cd467.svg",
+    "static/media/Ilustracion_agua_potable.2f7c6ed8.svg": "/static/media/Ilustracion_agua_potable.2f7c6ed8.svg",
+    "static/media/Ilustracion_energias_limpias.624f6966.svg": "/static/media/Ilustracion_energias_limpias.624f6966.svg",
+    "static/media/Ilustracion_movilidad_urbana.7334a9be.svg": "/static/media/Ilustracion_movilidad_urbana.7334a9be.svg",
+    "static/media/agua_de_lluvia-1.c8b5690d.jpeg": "/static/media/agua_de_lluvia-1.c8b5690d.jpeg",
+    "static/media/avatar_perfil_5.dd50365b.svg": "/static/media/avatar_perfil_5.dd50365b.svg",
+    "static/media/ilustracion_alimentacion_sustentable.099faf10.svg": "/static/media/ilustracion_alimentacion_sustentable.099faf10.svg",
+    "static/media/ilustracion_economia_circular.30927cad.svg": "/static/media/ilustracion_economia_circular.30927cad.svg",
+    "static/media/ilustracion_emprendedor_preguntas.a56b6622.svg": "/static/media/ilustracion_emprendedor_preguntas.a56b6622.svg",
+    "static/media/ilustracion_perfil_ciudadano.af28ad1b.svg": "/static/media/ilustracion_perfil_ciudadano.af28ad1b.svg",
+    "static/media/ilustracion_reactivacion.5a9b6ef9.svg": "/static/media/ilustracion_reactivacion.5a9b6ef9.svg",
+    "static/media/ilustracion_tejido_social.594bba92.svg": "/static/media/ilustracion_tejido_social.594bba92.svg",
+    "static/media/img1.0990555a.png": "/static/media/img1.0990555a.png",
+    "static/media/img2.498724be.png": "/static/media/img2.498724be.png"
   },
   "entrypoints": [
     "static/js/runtime-main.0da65fb2.js",
-    "static/js/2.89a49915.chunk.js",
-    "static/css/main.2ae47eeb.chunk.css",
-    "static/js/main.ea0bd1b8.chunk.js"
+    "static/js/2.929dfcfb.chunk.js",
+    "static/css/main.6dea0f05.chunk.css",
+    "static/js/main.96c9a95f.chunk.js"
   ]
 }
